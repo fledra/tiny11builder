@@ -203,7 +203,7 @@ $packages = & 'dism' '/English' "/image:$($ScratchDisk)\scratchdir" '/Get-Provis
     }
 
 $packagePrefixes = 'AppUp.IntelManagementandSecurityStatus',
-'Clipchamp.Clipchamp', 
+'Clipchamp.Clipchamp',
 'DolbyLaboratories.DolbyAccess',
 'DolbyLaboratories.DolbyDigitalPlusDecoderOEM',
 'Microsoft.BingNews',
@@ -252,7 +252,7 @@ $packagePrefixes = 'AppUp.IntelManagementandSecurityStatus',
 'MicrosoftCorporationII.MicrosoftFamily',
 'MicrosoftCorporationII.QuickAssist',
 'MSTeams',
-'MicrosoftTeams', 
+'MicrosoftTeams',
 'Microsoft.WindowsTerminal',
 'Microsoft.549981C3F5F10'
 
@@ -346,6 +346,10 @@ Set-RegistryValue 'HKLM\zNTUSER\Software\Microsoft\InputPersonalization\TrainedD
 Set-RegistryValue 'HKLM\zNTUSER\Software\Microsoft\Personalization\Settings' 'AcceptedPrivacyPolicy' 'REG_DWORD' '0'
 Set-RegistryValue 'HKLM\zSOFTWARE\Policies\Microsoft\Windows\DataCollection' 'AllowTelemetry' 'REG_DWORD' '0'
 Set-RegistryValue 'HKLM\zSYSTEM\ControlSet001\Services\dmwappushservice' 'Start' 'REG_DWORD' '4'
+## Disable Windows Spotlight and tips on lockscreen
+Set-RegistryValue 'HKLM\zNTUSER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager' 'RotatingLockScreenEnabled' 'REG_DWORD' '0'
+Set-RegistryValue 'HKLM\zNTUSER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager' 'RotatingLockScreenOverlayEnabled' 'REG_DWORD' '0'
+Set-RegistryValue 'HKLM\zNTUSER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager' 'SubscribedContent-338387Enabled' 'REG_DWORD' '0'
 ## Prevents installation of DevHome and Outlook
 Write-Output "Prevents installation of DevHome and Outlook:"
 Set-RegistryValue 'HKLM\zSOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Orchestrator\UScheduler_Oobe\OutlookUpdate' 'workCompleted' 'REG_DWORD' '1'
@@ -532,4 +536,3 @@ if (Test-Path -Path "$PSScriptRoot\autounattend.xml") {
 Stop-Transcript
 
 exit
-
