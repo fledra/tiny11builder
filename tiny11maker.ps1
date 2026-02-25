@@ -236,7 +236,6 @@ $packagePrefixes = 'AppUp.IntelManagementandSecurityStatus',
 'Microsoft.WindowsFeedbackHub',
 'Microsoft.WindowsMaps',
 'Microsoft.WindowsSoundRecorder',
-'Microsoft.WindowsTerminal',
 'Microsoft.Xbox.TCUI',
 'Microsoft.XboxApp',
 'Microsoft.XboxGameOverlay',
@@ -250,8 +249,8 @@ $packagePrefixes = 'AppUp.IntelManagementandSecurityStatus',
 'MicrosoftCorporationII.QuickAssist',
 'MSTeams',
 'MicrosoftTeams',
-'Microsoft.WindowsTerminal',
-'Microsoft.549981C3F5F10'
+'Microsoft.549981C3F5F10',
+'Microsoft.MicrosoftEdge.Stable_8wekyb3d8bbwe'
 
 $packagesToRemove = $packages | Where-Object {
     $packageName = $_
