@@ -92,7 +92,7 @@ if (! $myWindowsPrincipal.IsInRole($adminRole))
 {
     Write-Output "Restarting Tiny11 image creator as admin in a new window, you can close this one."
     $newProcess = new-object System.Diagnostics.ProcessStartInfo "PowerShell";
-    $newProcess.Arguments = $myInvocation.MyCommand.Definition;
+    $newProcess.Arguments = "-NoProfile -ExecutionPolicy Bypass -NoExit -File `"$($myInvocation.MyCommand.Definition)`"";
     $newProcess.Verb = "runas";
     [System.Diagnostics.Process]::Start($newProcess);
     exit
@@ -179,7 +179,7 @@ if ($languageLine) {
 
 # Defined in (Microsoft.Dism.Commands.ImageInfoObject).Architecture formatting script
 # 0 -> x86, 5 -> arm(currently unused), 6 -> ia64(currently unused), 9 -> x64, 12 -> arm64
-switch ((Get-WindowsImage -ImagePath $wimFilePath -Index $index).Architecture) 
+switch ((Get-WindowsImage -ImagePath $wimFilePath -Index $index).Architecture)
 {
     0 { $architecture = "x86" }
     9 { $architecture = "amd64" }
@@ -461,7 +461,7 @@ if ($ADKDepTools -and [System.IO.File]::Exists("$ADKDepTools\oscdimg.exe")) {
     $OSCDIMG = "$ADKDepTools\oscdimg.exe"
 } else {
     Write-Output "oscdimg.exe from system ADK not found. Will be using bundled oscdimg.exe."
-    
+
     $url = "https://msdl.microsoft.com/download/symbols/oscdimg.exe/3D44737265000/oscdimg.exe"
 
     if (![System.IO.File]::Exists($localOSCDIMGPath)) {
