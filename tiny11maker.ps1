@@ -200,7 +200,7 @@ $packages = Get-ProvisionedAppxPackage -Path "$ScratchDisk\scratchdir" |
     }
 
 $packagePrefixes = 'AppUp.IntelManagementandSecurityStatus',
-'Clipchamp.Clipchamp', 
+'Clipchamp.Clipchamp',
 'DolbyLaboratories.DolbyAccess',
 'DolbyLaboratories.DolbyDigitalPlusDecoderOEM',
 'Microsoft.BingNews',
@@ -249,7 +249,8 @@ $packagePrefixes = 'AppUp.IntelManagementandSecurityStatus',
 'MicrosoftCorporationII.MicrosoftFamily',
 'MicrosoftCorporationII.QuickAssist',
 'MSTeams',
-'MicrosoftTeams', 
+'MicrosoftTeams',
+'Microsoft.WindowsTerminal',
 'Microsoft.549981C3F5F10'
 
 $packagesToRemove = $packages | Where-Object {
@@ -343,6 +344,10 @@ Set-RegistryValue 'HKLM\zNTUSER\Software\Microsoft\InputPersonalization\TrainedD
 Set-RegistryValue 'HKLM\zNTUSER\Software\Microsoft\Personalization\Settings' 'AcceptedPrivacyPolicy' 'REG_DWORD' '0'
 Set-RegistryValue 'HKLM\zSOFTWARE\Policies\Microsoft\Windows\DataCollection' 'AllowTelemetry' 'REG_DWORD' '0'
 Set-RegistryValue 'HKLM\zSYSTEM\ControlSet001\Services\dmwappushservice' 'Start' 'REG_DWORD' '4'
+## Disable Windows Spotlight and tips on lockscreen
+Set-RegistryValue 'HKLM\zNTUSER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager' 'RotatingLockScreenEnabled' 'REG_DWORD' '0'
+Set-RegistryValue 'HKLM\zNTUSER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager' 'RotatingLockScreenOverlayEnabled' 'REG_DWORD' '0'
+Set-RegistryValue 'HKLM\zNTUSER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager' 'SubscribedContent-338387Enabled' 'REG_DWORD' '0'
 ## Prevents installation of DevHome and Outlook
 Write-Output "Prevents installation of DevHome and Outlook:"
 Set-RegistryValue 'HKLM\zSOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Orchestrator\UScheduler_Oobe\OutlookUpdate' 'workCompleted' 'REG_DWORD' '1'
@@ -384,7 +389,7 @@ reg unload HKLM\zNTUSER | Out-Null
 reg unload HKLM\zSOFTWARE | Out-Null
 reg unload HKLM\zSYSTEM | Out-Null
 Write-Output "Cleaning up image..."
-Repair-WindowsImage -Path $ScratchDisk\scratchdir -StartComponentCleanup -ResetBase
+dism.exe /Image:$ScratchDisk\scratchdir /Cleanup-Image /StartComponentCleanup /ResetBase
 Write-Output "Cleanup complete."
 Write-Output ' '
 Write-Output "Unmounting image..."
@@ -540,4 +545,3 @@ if (Test-Path -Path "$PSScriptRoot\autounattend.xml") {
 Stop-Transcript
 
 exit
-
